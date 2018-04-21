@@ -1,0 +1,23 @@
+version: "3"
+services:
+  nean-ci-server:
+    image: nean-ci-server
+    build:
+      context: .
+      args:
+        - APP_NAME=${APP_NAME}
+        - APP_REPOSITORY=${APP_REPOSITORY}
+        - GITHUB_SECRET=${GITHUB_SECRET}
+    ports:
+      - "${EXTERNAL_PORT}:3000"
+      - "${GITHOOK_EXTERNAL_PORT}:8888"
+    volumes:
+      - nean-ci-server-log:${LOG_FOLDER}
+      - nean-ci-server-build:${BUILD_FOLDER}
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - LOG_FOLDER=${LOG_FOLDER}
+      - BUILD_FOLDER={BUILD_FOLDER}
+      - GITHUB_SECRET=${GITHUB_SECRET}
+      - GITHUB_XHUB_ALGORITHM=${GITHUB_XHUB_ALGORITHM}
